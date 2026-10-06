@@ -7,10 +7,14 @@ A plain React + Express project using PokéAPI. It implements search and detail 
 1. Install Node.js 18 or later.
 2. Copy `.env.example` to `.env` (the defaults work locally).
 3. Run `npm install`.
-4. Run `npm start`.
-5. Open `http://localhost:5173`.
+4. For development, use two terminals: `npm run server` and `npm run dev`. Open `http://localhost:5173`.
+5. To run the complete production-style app from one URL, run `npm start`. Open `http://localhost:3001`.
 
-The frontend runs on port 5173 and the Express API on port 3001. `VITE_API_URL` can point the frontend at a deployed API.
+During development, Vite runs on port 5173 and proxies API requests to Express on port 3001. In production, Express serves the built React app and API together on one port.
+
+## Deploy as one service
+
+Deploy this repository as one Node/Express web service (for example, on Render): set the build command to `npm ci && npm run build` and the start command to `npm run server`. No separate frontend host or API URL is needed.
 
 ## Persistence behavior
 

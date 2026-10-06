@@ -1,4 +1,5 @@
-const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+// In production, React and Express share one origin. Vite proxies /api locally.
+const apiUrl = import.meta.env.VITE_API_URL || ''
 const pokeApi = 'https://pokeapi.co/api/v2'
 
 async function request(url, options) {

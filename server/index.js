@@ -1,9 +1,12 @@
 import 'dotenv/config'
 import cors from 'cors'
 import express from 'express'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const app = express()
 const port = process.env.PORT || 3001
+const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const pokeApi = 'https://pokeapi.co/api/v2'
 const attackTypes = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy']
 const sharedTeams = new Map()
@@ -106,4 +109,8 @@ app.get('/api/shared-teams/:shareId', async (req, res) => {
   }
 })
 
-app.listen(port, () => console.log(`API listening on http://localhost:${port}`))
+// Production: one Express service serves both the React build and API routes.
+app.use(express.static(path.join(projectRoot, 'dist')))
+app.get('*', (_req, res) => res.sendFile(path.join(projectRoot, 'dist', 'index.html')))
+
+app.listen(port, '0.0.0.0', () => console.log(`App listening on http://localhost:${port}`))
